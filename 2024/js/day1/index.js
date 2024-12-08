@@ -12,17 +12,16 @@ const r = (l1, l2) =>
     ? 0
     : Math.abs(l1[0] - l2[0]) + r(l1.slice(1), l2.slice(1));
 
-console.log("Distance", r(l1,l2))
+const distance = r(l1,l2)
 
 // Part Two
-let similarity = []
-for(let i = 0; i < l1.length; i++) {
-  let ocurrence = 0;
-  for(let j = 0; j < l2.length; j++) 
-    if(l1[i] === l2[j]) ocurrence++
+const freq = l2.reduce((map, num) => {
+  map[num] = (map[num] || 0) + 1
+  return map
+}, {})
 
-  similarity.push({n: l1[i], ocurrence})
-}
-
-const total = similarity.reduce((acc, el) => acc + (el["n"] * el["ocurrence"]) , 0)
-console.log("Similarity", total)
+const similarity = l1.reduce((acc,num) => {
+  console.log(freq[num])
+  if(freq[num]) return acc + (num * freq[num])
+  else return acc
+}, 0)
